@@ -148,7 +148,18 @@ export default function CreateProductScreen ({ navigation, route }) {
                 }
               />
               <ErrorMessage name={'availability'} render={msg => <TextError>{msg}</TextError> }/>
-
+              
+              <TextRegular>Promoted?</TextRegular>
+              <Switch
+                trackColor={{ false: GlobalStyles.brandSecondary, true: GlobalStyles.brandPrimary }}
+                thumbColor={values.promoted ? GlobalStyles.brandSecondary : '#f4f3f4'}
+                // onValueChange={toggleSwitch}
+                value={values.promoted}
+                style={styles.switch}
+                onValueChange={value =>
+                  setFieldValue('promoted', value)
+                }
+              />
               <Pressable onPress={() =>
                 pickImage(
                   async result => {

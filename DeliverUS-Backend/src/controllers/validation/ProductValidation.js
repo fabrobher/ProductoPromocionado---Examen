@@ -1,5 +1,5 @@
 import { check } from 'express-validator'
-import { Restaurant } from '../../models/models.js'
+import { Product, Restaurant } from '../../models/models.js'
 import { checkFileIsImage, checkFileMaxSize } from './FileValidationHelper.js'
 
 const maxFileSize = 2000000 // around 2Mb
@@ -14,10 +14,29 @@ const checkRestaurantExists = async (value, { req }) => {
     return Promise.reject(new Error(err))
   }
 }
+
+const checkOnlyOnePromotedProduct = async (value, { req }) => {
+ if (value){
+  try{
+    const product = await  Product.findOne({ where : { restaurantId: req.body.restaurantId, promoted: true}})
+    if(product !== null){
+      return Promise.reject(new Error('Ya hay un producto promocionado en este restaurante'))
+    } else {
+      return Promise.resolve()
+    }
+
+  }catch(err){
+    return Promise.reject(new Error(err))
+  }
+
+ }
+} 
+
 const create = [
   check('name').exists().isString().isLength({ min: 1, max: 255 }).trim(),
   check('description').optional({ checkNull: true, checkFalsy: true }).isString().isLength({ min: 1 }).trim(),
   check('price').exists().isFloat({ min: 0 }).toFloat(),
+  check('promoted').custom(checkOnlyOnePromotedProduct),
   check('order').default(null).optional({ nullable: true }).isInt().toInt(),
   check('availability').optional().isBoolean().toBoolean(),
   check('productCategoryId').exists().isInt({ min: 1 }).toInt(),

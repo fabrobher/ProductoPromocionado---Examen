@@ -65,6 +65,16 @@ export default function RestaurantDetailScreen ({ navigation, route }) {
         {!item.availability &&
           <TextRegular textStyle={styles.availability }>Not available</TextRegular>
         }
+        
+        <View style= {{position: 'absoluted', top:-20, right: -390}}>
+
+        {item.promoted
+          ? <TextRegular textStyle= {{color: 'red'}}>Promoted!</TextRegular>
+          : <TextRegular textStyle = {{color: 'red'}}>Not Promoted</TextRegular>
+        }
+
+        </View>
+        
          <View style={styles.actionButtonsContainer}>
           <Pressable
             onPress={() => navigation.navigate('EditProductScreen', { id: item.id })

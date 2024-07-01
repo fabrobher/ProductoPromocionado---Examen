@@ -83,7 +83,7 @@ const popular = async function (req, res) {
         {
           model: Restaurant,
           as: 'restaurant',
-          attributes: ['id', 'name', 'description', 'address', 'postalCode', 'url', 'shippingCosts', 'averageServiceMinutes', 'email', 'phone', 'logo', 'heroImage', 'status', 'restaurantCategoryId'],
+          attributes: ['id', 'name', 'promoted', 'description', 'address', 'postalCode', 'url', 'shippingCosts', 'averageServiceMinutes', 'email', 'phone', 'logo', 'heroImage', 'status', 'restaurantCategoryId'],
           include:
         {
           model: RestaurantCategory,
